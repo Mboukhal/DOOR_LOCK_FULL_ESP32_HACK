@@ -2,7 +2,6 @@
 
 void WifiLock::begin(void) {
   EEPROM.begin(500);
-  Serial.println("WifiLock start");
 }
 
 void WifiLock::get_auth_data() {
@@ -45,12 +44,13 @@ void WifiLock::set_auth_data() {
 
 
 void WifiLock::reset_auth_data() {
-
-  this->authData.ssid = "\0";
-  this->authData.password = "\0";
-  this->authData.endpoint = "\0";
-  this->authData.token = "\0";
-  this->set_auth_data();
+  
+  this->set_auth_data(
+    "\0",
+    "\0",
+    "\0",
+    "\0"
+  );
 }
 
 void WifiLock::print_auth_data() {
@@ -59,13 +59,13 @@ void WifiLock::print_auth_data() {
 
   int address = 0;
 
-  Serial.println("SSID: \"" + this->authData.ssid + "\", ADDRESS: " + address);
+  Serial.println("SSID: [" + this->authData.ssid + "]");
   address += SSID_SIZE + 1;
-  Serial.println("PASSWORD: \"" + this->authData.password + "\", ADDRESS: " + address);
+  Serial.println("PASSWORD: [" + this->authData.password + "]");
   address += PASSWORD_SIZE + 1;
-  Serial.println("ENDPOINT: \"" + this->authData.endpoint + "\", ADDRESS: " + address);
+  Serial.println("ENDPOINT: [" + this->authData.endpoint + "]");
   address += ENDPOINT_SIZE + 1;
-  Serial.println("TOKEN: \"" + this->authData.token + "\", ADDRESS: " + address);
+  Serial.println("TOKEN: [" + this->authData.token + "]");
 }
 
 

@@ -9,7 +9,7 @@ void write_str(const String &str, uint8_t start_address){
       // Serial.println("Write: \"" + String(str[j]) + "\", address: " + String(i));
   }
   EEPROM.write(start_address + str.length(), '\0');
-  // EEPROM.commit();
+  EEPROM.commit();
 }
 
 void write_str(const String &str){
