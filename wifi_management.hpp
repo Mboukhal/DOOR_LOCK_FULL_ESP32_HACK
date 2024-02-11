@@ -29,6 +29,8 @@ class WifiLock {
     bool valid_config(void);
     void connect_to_wifi(void);
     bool Config_set = false;
+    String get_endpoint(void);
+    String get_token(void);
     void set_auth_data(const String &ssid,
                         const String &password,
                         const String &endpoint,

@@ -79,10 +79,21 @@ bool WifiLock::valid_config(void) {
 }
 
 
+String WifiLock::get_endpoint(void) {
+  return this->authData.endpoint;
+}
+String WifiLock::get_token(void) {
+  return this->authData.token;
+}
+
 void WifiLock::connect_to_wifi(void) {
 
   this->get_auth_data();
 
+  WiFi.mode(WIFI_MODE_STA);
+  WiFi.enableAP(false);
+  WiFi.softAPdisconnect();
+  WiFi.softAPdisconnect(false);
   WiFi.disconnect();
   delay(10);
 

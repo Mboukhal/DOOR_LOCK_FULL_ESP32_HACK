@@ -2,6 +2,7 @@
 
 #include "./wifi_management.hpp"
 #include "./config_page.hpp"
+#include "./request.hpp"
 
 #include <Wiegand.h>
 
@@ -88,6 +89,8 @@ void badge_code(void) {
     unsigned long code = wg.getCode();
 		Serial.print("Badge Code: ");
 		Serial.println(code);
+
+    if (request(WL.get_endpoint(), WL.get_token(), String(code))) {
     digitalWrite(LEDS, HIGH);
     digitalWrite(SWITCH, HIGH);
     
@@ -97,6 +100,7 @@ void badge_code(void) {
     digitalWrite(SWITCH, LOW);
     digitalWrite(LEDS, LOW);
     // delay(2000);
+    }
     while(wg.available()) {
       code = wg.getCode();
     }
