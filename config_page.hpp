@@ -15,7 +15,6 @@ class ConfigPage {
     String token;
     WifiLock *WL;
     
-
   public:
     void begin(WifiLock *WL);
     void waitClient(void);

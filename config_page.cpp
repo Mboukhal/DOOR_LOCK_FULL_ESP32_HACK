@@ -12,26 +12,31 @@ void ConfigPage::begin(WifiLock *WL) {
   WiFi.softAPConfig(IPAddress(192, 168, 13, 37), IPAddress(192, 168, 13, 1), IPAddress(255, 255, 255, 0));
 
   // Print the ESP32 IP address
-  Serial.println("ESP32 IP address:");
-  Serial.println(WiFi.softAPIP());
+  // Serial.println("ESP32 IP address:");
+  // Serial.println(WiFi.softAPIP());
 
   // Start the server
   server.begin();
-  Serial.println("Server started");
+  // Serial.println("Server started");
 }
 
 void ConfigPage::waitClient(void) {
   WiFiClient client = server.available();
   if (client) {
-    Serial.println("New client connected");
+    // Serial.println("New client connected");
     this->handleClient(client);
   }
+  digitalWrite(2, HIGH);
+  delay(200);
+  digitalWrite(2, LOW);
+  delay(200);
+
 }
 
 void ConfigPage::handleClient(WiFiClient client) {
 
 
-  Serial.println("New Client.");
+  // Serial.println("New Client.");
     // this->WL.print_auth_data();
 
 
@@ -89,8 +94,8 @@ void ConfigPage::handleFormSubmission() {
     // Serial.println(this->ssid + ", " + this->password + ", " + this->endpoint + ", "  + this->token);
     // Serial.println("--------------------------------------------------------");
 
-    // this->WL->set_auth_data(this->ssid, this->password, this->endpoint, this->token);
-    this->WL->print_auth_data();
+    this->WL->set_auth_data(this->ssid, this->password, this->endpoint, this->token);
+    // this->WL->print_auth_data();
   }
 
 }
@@ -173,11 +178,10 @@ void ConfigPage::displayHtmlForm(WiFiClient client) {
     <script>
         function validateForm() {
             var ssid = document.getElementById("ssid").value;
-            var password = document.getElementById("password").value;
             var endpoint = document.getElementById("endpoint").value;
             var token = document.getElementById("token").value;
 
-            if (ssid.trim() === '' || password.trim() === '' || endpoint.trim() === '' || token.trim() === '') {
+            if (ssid.trim() === '' || endpoint.trim() === '' || token.trim() === '') {
                 alert("All fields must be filled out");
                 return false;
             }

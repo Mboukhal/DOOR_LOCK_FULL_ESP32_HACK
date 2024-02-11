@@ -1,5 +1,6 @@
 #pragma once
 #include "rw_eeprom.hpp"
+#include <WiFi.h>
 
 
 struct AUTH_DATA {
@@ -20,13 +21,15 @@ class WifiLock {
   private:
     AUTH_DATA authData;
 
-
   public:
     void begin(void);
     void get_auth_data(void);
     void set_auth_data(void);
     void print_auth_data(void);
     void reset_auth_data(void);
+    bool valid_config(void);
+    void connect_to_wifi(void);
+    bool Config_set = false;
     void set_auth_data(const String &ssid,
                         const String &password,
                         const String &endpoint,
