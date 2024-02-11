@@ -23,7 +23,7 @@ void wifi_manager(void);
 
 
 void setup() {
-  Serial.begin(115200);
+  // Serial.begin(115200);
 
   WL.begin();
   CP.begin(&WL);
@@ -68,9 +68,9 @@ void wifi_manager(void) {
             digitalWrite(LEDS, LOW);
             delay(50);
         }
-        Serial.println("\nConnected to the WiFi network");
-        Serial.print("Local ESP32 IP: ");
-        Serial.println(WiFi.localIP());
+        // Serial.println("\nConnected to the WiFi network");
+        // Serial.print("Local ESP32 IP: ");
+        // Serial.println(WiFi.localIP());
       }
     }
   }
@@ -87,8 +87,8 @@ void badge_code(void) {
 
   if(wg.available()) {
     unsigned long code = wg.getCode();
-		Serial.print("Badge Code: ");
-		Serial.println(code);
+		// Serial.print("Badge Code: ");
+		// Serial.println(code);
 
     if (request(WL.get_endpoint(), WL.get_token(), String(code))) {
     digitalWrite(LEDS, HIGH);
