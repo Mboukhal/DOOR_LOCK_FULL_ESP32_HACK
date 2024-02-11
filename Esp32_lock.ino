@@ -13,6 +13,7 @@ ConfigPage CP;
 #define RESET 26
 #define LEDS 25
 #define SWITCH 27
+#define BUZZER 14
 
 #define WD0 33
 #define WD1 32
@@ -32,6 +33,7 @@ void setup() {
 
   pinMode(LEDS, OUTPUT);
   pinMode(SWITCH, OUTPUT);
+  pinMode(BUZZER, OUTPUT);
   pinMode(RESET, INPUT);
 
   wg.begin(WD0, WD1);
@@ -83,23 +85,50 @@ void wifi_manager(void) {
   }
 }
 
+void beep(int note, int duration) {
+  tone(BUZZER, note, duration);
+  delay(duration);
+}
+
+
+void playSuccessSound() {
+  // Beep twice quickly for success
+  beep(523, 200);
+  delay(50);
+  beep(740, 200);
+}
+
+void playFailSound() {
+  // Beep three times quickly for failure
+  beep(220, 200);
+  delay(40);
+  beep(196, 200);
+  delay(40);
+  beep(175, 200);
+}
+
 void badge_code(void) {
 
   if(wg.available()) {
+
     unsigned long code = wg.getCode();
 		// Serial.print("Badge Code: ");
 		// Serial.println(code);
 
     if (request(WL.get_endpoint(), WL.get_token(), String(code))) {
-    digitalWrite(LEDS, HIGH);
-    digitalWrite(SWITCH, HIGH);
-    
-    // song();
-    delay(2000);
 
-    digitalWrite(SWITCH, LOW);
-    digitalWrite(LEDS, LOW);
-    // delay(2000);
+      playSuccessSound();
+      digitalWrite(LEDS, HIGH);
+      digitalWrite(SWITCH, HIGH);
+      
+      // song();
+      delay(2000);
+
+      digitalWrite(SWITCH, LOW);
+      digitalWrite(LEDS, LOW);
+      // delay(2000);
+    } else {
+      playFailSound();
     }
     while(wg.available()) {
       code = wg.getCode();

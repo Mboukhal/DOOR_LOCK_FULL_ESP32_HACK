@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-ID_LIST = ['1234', '5678', '9101']
+ID_LIST = ['1234', '5678', '0']
 
 @app.route('/api_door_lock', methods=['POST'])
 def post_example():
