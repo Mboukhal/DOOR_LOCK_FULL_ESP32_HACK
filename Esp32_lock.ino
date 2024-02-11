@@ -91,6 +91,13 @@ void beep(int note, int duration) {
 }
 
 
+void playInDataSound() {
+  // Beep twice quickly for in data
+  beep(900, 120);
+  delay(30);
+  beep(900, 120);
+}
+
 void playSuccessSound() {
   // Beep twice quickly for success
   beep(523, 200);
@@ -110,22 +117,23 @@ void playFailSound() {
 void badge_code(void) {
 
   if(wg.available()) {
-
+    if(wg.getWiegandType() != 26)
+      return; 
     unsigned long code = wg.getCode();
 		// Serial.print("Badge Code: ");
 		// Serial.println(code);
-
+    playInDataSound();
     if (request(WL.get_endpoint(), WL.get_token(), String(code))) {
 
       playSuccessSound();
-      digitalWrite(LEDS, HIGH);
       digitalWrite(SWITCH, HIGH);
+      // digitalWrite(LEDS, HIGH);
       
       // song();
       delay(2000);
 
       digitalWrite(SWITCH, LOW);
-      digitalWrite(LEDS, LOW);
+      // digitalWrite(LEDS, LOW);
       // delay(2000);
     } else {
       playFailSound();

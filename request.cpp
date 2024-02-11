@@ -21,22 +21,8 @@ bool request(const String &endpoint, const String &token, const String &id_code)
   int httpResponseCode = http.POST(payload);
 
   if (httpResponseCode == 200) {
-    // Serial.print("HTTP Response code: ");
-    // Serial.println(httpResponseCode);
-
-    // // Read the response
-    // String response = http.getString();
-    // Serial.println("Server response: " + response);
-
-    // // Parse the JSON response if needed
-    // // JsonObject root = jsonDoc.parseObject(response);
-    // // const char* message = root["message"];
     res = true;
   }
-  // else {
-  //   Serial.print("HTTP POST request failed, error: ");
-  //   Serial.println(httpResponseCode);
-  // }
 
   // Close connection
   http.end();
