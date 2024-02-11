@@ -2,7 +2,6 @@
 #include "rw_eeprom.hpp"
 #include <WiFi.h>
 
-
 struct AUTH_DATA {
   String ssid;
   String password;

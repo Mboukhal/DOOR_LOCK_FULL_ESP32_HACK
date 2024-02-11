@@ -17,9 +17,12 @@ class ConfigPage {
     
   public:
     void begin(WifiLock *WL);
+    void begin(void);
     void waitClient(void);
     void handleClient(WiFiClient client);
     void handleFormSubmission();
     void displayHtmlForm(WiFiClient client);
 
 };
+
+String urlDecode(String input);

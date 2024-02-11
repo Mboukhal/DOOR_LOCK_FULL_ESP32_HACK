@@ -30,6 +30,9 @@ void WifiLock::set_auth_data(
   this->set_auth_data();
   this->Config_set = this->valid_config();
 
+  // if (this->Config_set)
+  //    WiFi.mode(WIFI_AP);
+
 }
 
 void WifiLock::set_auth_data() {
@@ -47,6 +50,7 @@ void WifiLock::set_auth_data() {
 
 void WifiLock::reset_auth_data() {
   this->set_auth_data("\0", "\0", "\0", "\0");
+  this->Config_set = false;
 }
 
 void WifiLock::print_auth_data() {
@@ -78,15 +82,13 @@ bool WifiLock::valid_config(void) {
 void WifiLock::connect_to_wifi(void) {
 
   this->get_auth_data();
+
+  WiFi.disconnect();
+  delay(10);
+
   WiFi.mode(WIFI_STA);
   WiFi.begin(this->authData.ssid, this->authData.password);
-  while(WiFi.status() != WL_CONNECTED){
-    digitalWrite(2, HIGH);
-    delay(50);
-    digitalWrite(2, LOW);
-    delay(50);
-  }
-
+  // Serial.println("ssid: [" + this->authData.ssid + "], password: [" + this->authData.password + "]");
 
   // Serial.println("\nConnected to the WiFi network");
   // Serial.print("Local ESP32 IP: ");

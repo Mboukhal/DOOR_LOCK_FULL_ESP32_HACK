@@ -20,17 +20,31 @@ void ConfigPage::begin(WifiLock *WL) {
   // Serial.println("Server started");
 }
 
+void ConfigPage::begin(void) {
+
+    // Connect to WiFi
+
+  WiFi.disconnect();
+  delay(10);
+
+  WiFi.softAP(SSID_AP, PASSWORD_AP);
+  WiFi.softAPConfig(IPAddress(192, 168, 13, 37), IPAddress(192, 168, 13, 1), IPAddress(255, 255, 255, 0));
+
+  // Print the ESP32 IP address
+  // Serial.println("ESP32 IP address:");
+  // Serial.println(WiFi.softAPIP());
+
+  // Start the server
+  server.begin();
+  // Serial.println("Server started");
+}
+
 void ConfigPage::waitClient(void) {
   WiFiClient client = server.available();
   if (client) {
     // Serial.println("New client connected");
     this->handleClient(client);
   }
-  digitalWrite(2, HIGH);
-  delay(200);
-  digitalWrite(2, LOW);
-  delay(200);
-
 }
 
 void ConfigPage::handleClient(WiFiClient client) {
@@ -94,10 +108,52 @@ void ConfigPage::handleFormSubmission() {
     // Serial.println(this->ssid + ", " + this->password + ", " + this->endpoint + ", "  + this->token);
     // Serial.println("--------------------------------------------------------");
 
-    this->WL->set_auth_data(this->ssid, this->password, this->endpoint, this->token);
+    this->WL->set_auth_data(urlDecode(this->ssid), urlDecode(this->password), urlDecode(this->endpoint), urlDecode(this->token));
     // this->WL->print_auth_data();
   }
 
+}
+
+
+int hexToDec(char c) {
+  if (c >= '0' && c <= '9') {
+    return c - '0';
+  }
+  if (c >= 'A' && c <= 'F') {
+    return c - 'A' + 10;
+  }
+  if (c >= 'a' && c <= 'f') {
+    return c - 'a' + 10;
+  }
+  return 0;
+}
+
+String urlDecode(String input) {
+  String decodedString = "";
+  char c;
+  char code0;
+  char code1;
+  
+  for (size_t i = 0; i < input.length(); i++) {
+    c = input.charAt(i);
+    if (c == '+') {
+      decodedString += ' ';
+    } else if (c == '%') {
+      // Get the next two characters after '%'
+      code0 = input.charAt(++i);
+      code1 = input.charAt(++i);
+      
+      // Convert ASCII characters to their hexadecimal equivalent
+      int value = hexToDec(code0) * 16 + hexToDec(code1);
+      
+      // Convert the hexadecimal value to the corresponding character
+      decodedString += (char)value;
+    } else {
+      decodedString += c;
+    }
+  }
+  
+  return decodedString;
 }
 
 // GET /submit?ssid=zdf&password=ag&endpoint=adfg&token=ag HTTP/1.1
