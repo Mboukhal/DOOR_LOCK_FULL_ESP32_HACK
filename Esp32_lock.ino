@@ -10,13 +10,13 @@ WIEGAND wg;
 WifiLock WL;
 ConfigPage CP;
 
-#define RESET 26
-#define LEDS 25
-#define SWITCH 27
-#define BUZZER 14
+#define RESET 26	// reset button
+#define LEDS 25		// front leds
+#define SWITCH 27	// relay for door lock
+#define BUZZER 14	// buzzer for sound reactions
 
-#define WD0 33
-#define WD1 32
+#define WD0 33		// data_0 for Weigand
+#define WD1 32		// data_1 for Weigand
 
 void reset(void);
 void badge_code(void);
