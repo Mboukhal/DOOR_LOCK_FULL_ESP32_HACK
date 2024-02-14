@@ -1,4 +1,3 @@
-
 # DOOR_LOCK_FULL_ESP32_HACK
 
 ## Introduction
@@ -15,7 +14,20 @@ This project involves modifying an RFID reader `Product` and implementing a door
 
 - RFID Reader `Product`
 - ESP32 microcontroller
-- PlatformIO and Arduino for coding
+- Arduino for coding
+
+## Pin Configuration
+
+```cpp
+// pin configuration
+#define RESET 26	// reset button
+#define LEDS 25		// front leds
+#define SWITCH 27	// relay for door lock
+#define BUZZER 14	// buzzer for sound reactions
+
+#define WD0 33		// data_0 for Weigand
+#define WD1 32		// data_1 for Weigand
+```
 
 ## Setup
 
@@ -28,16 +40,15 @@ This project involves modifying an RFID reader `Product` and implementing a door
 2. Install necessary libraries:
 
 	Wiegand:
-	```
+	```bash
 	cd arduino/libraries
 	git clone https://github.com/monkeyboard/Wiegand-Protocol-Library-for-Arduino.git Wiegand
 	```
 
 	ArduinoJson:
-	Sketch > Include Library > Manage Librarys...
-   
+	- Sketch > Include Library > Manage Libraries...
 
-3. Upload the code to your ESP32 using PlatformIO.
+3. Upload the code to your ESP32.
 
 ## Configuration
 
