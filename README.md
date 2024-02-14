@@ -27,14 +27,15 @@ This project involves modifying an RFID reader `Product` and implementing a door
 
 2. Install necessary libraries:
 
-	```Wiegand
+	Wiegand:
+	```
 	cd arduino/libraries
 	git clone https://github.com/monkeyboard/Wiegand-Protocol-Library-for-Arduino.git Wiegand
 	```
 
-	```ArduinoJson
+	ArduinoJson:
 	Sketch > Include Library > Manage Librarys...
-	```
+   
 
 3. Upload the code to your ESP32 using PlatformIO.
 
