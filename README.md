@@ -57,6 +57,7 @@ This project involves modifying an RFID reader `Product` and implementing a door
   - Password: `+@@1337@@+`
   - IP: `192.168.13.37`
 - Use the web interface to configure the device.
+![Configuration Page](https://github.com/Mboukhal/DOOR_LOCK_FULL_ESP32_HACK/images/config_page.png)
 
 ## Usage
 
